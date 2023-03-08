@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BookShopAsp.Models.Book>
+
+@{
+    ViewData["Title"] = "Библиотека";
+}
+
+<h1>Библиотека</h1>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Добавить книгу</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+           
+
+            <td>
+                    @if (User.IsInRole("Admin")) {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> <a>|</a>
+                        <a asp-action = "Delete" asp-route-id = "@item.Id" > Удалить </a> <a>|</a>
+                    }
+                <a asp-action="Details" asp-route-id="@item.Id">Подробнее</a> 
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>
